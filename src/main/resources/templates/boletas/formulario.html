@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Boleta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-3">Registrar Boleta</h2>
+
+    <form th:action="@{/boletas/guardar}" method="post" class="card p-4 shadow">
+        <div class="mb-3">
+            <label class="form-label">Fecha</label>
+            <input type="date" name="fecha" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nombre del cliente</label>
+            <input type="text" name="nomCliente" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Estado</label>
+            <input type="text" name="estado" class="form-control" value="PENDIENTE" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Total</label>
+            <input type="number" step="0.01" min="0" name="total" class="form-control" required>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a th:href="@{/boletas}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

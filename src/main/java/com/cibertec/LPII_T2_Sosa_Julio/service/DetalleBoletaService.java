@@ -25,7 +25,9 @@ public class DetalleBoletaService {
     public DetalleBoleta buscar(DetalleBoletaId id) {
         return detalleBoletaRepository.findById(id).orElse(null);
     }
-
+    public List<DetalleBoleta> listarPorBoleta(Long nroBoleta) {
+        return detalleBoletaRepository.findByBoletaNroBoletaAndActivo(nroBoleta, 0);
+    }
     public void guardar(DetalleBoleta detalle) {
         detalleBoletaRepository.save(detalle);
     }
