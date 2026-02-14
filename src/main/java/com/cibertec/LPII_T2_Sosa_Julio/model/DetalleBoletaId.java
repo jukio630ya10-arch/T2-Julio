@@ -37,7 +37,6 @@ public class DetalleBoletaId implements Serializable {
         this.idProd = idProd;
     }
 
-    // equals() obligatorio
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,7 +46,6 @@ public class DetalleBoletaId implements Serializable {
                Objects.equals(idProd, that.idProd);
     }
 
-    // hashCode() obligatorio
     @Override
     public int hashCode() {
         return Objects.hash(nroBoleta, idProd);

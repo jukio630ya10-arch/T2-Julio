@@ -115,24 +115,42 @@ public class BoletaController {
     @GetMapping("/boletas/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("boleta", new Boleta());
+        model.addAttribute("productos", productoService.listarActivos());
         return "boletas/formulario";
     }
 
     @PostMapping("/boletas/guardar")
     public String guardar(@RequestParam String fecha,
-                          @RequestParam String nomCliente,
-                          @RequestParam String estado,
-                          @RequestParam Double total,
-                          RedirectAttributes ra) {
-        Boleta boleta = new Boleta();
-        boleta.setFecha(LocalDate.parse(fecha));
-        boleta.setNomCliente(nomCliente);
-        boleta.setEstado(estado);
-        boleta.setTotal(total);
-        boleta.setActivo(0);
-        boletaService.guardar(boleta);
-        ra.addFlashAttribute("success", "Boleta registrada correctamente.");
-        return "redirect:/boletas";
+            @RequestParam String nomCliente,
+            @RequestParam String estado,
+            @RequestParam Long productoId,
+            @RequestParam Integer cantidad,
+            RedirectAttributes ra) {
+Producto producto = productoService.buscar(productoId);
+
+if (producto == null) {
+ra.addFlashAttribute("error", "No se pudo registrar la boleta porque el producto no existe.");
+return "redirect:/boletas";
+}
+
+Boleta boleta = new Boleta();
+boleta.setFecha(LocalDate.parse(fecha));
+boleta.setNomCliente(nomCliente);
+boleta.setEstado(estado);
+boleta.setTotal(producto.getPrecio() * cantidad);
+boleta.setActivo(0);
+boletaService.guardar(boleta);
+
+DetalleBoleta detalle = new DetalleBoleta();
+detalle.setId(new DetalleBoletaId(boleta.getNroBoleta(), productoId));
+detalle.setBoleta(boleta);
+detalle.setProducto(producto);
+detalle.setCantidad(cantidad);
+detalle.setActivo(0);
+detalleBoletaService.guardar(detalle);
+
+ra.addFlashAttribute("success", "Boleta registrada correctamente.");
+return "redirect:/boletas";
     }
     public static class BoletaResumen {
         private final Long nroBoleta;
