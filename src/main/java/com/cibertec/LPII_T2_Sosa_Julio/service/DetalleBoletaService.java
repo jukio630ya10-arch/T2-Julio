@@ -22,6 +22,10 @@ public class DetalleBoletaService {
         return detalleBoletaRepository.findByActivo(0);
     }
 
+    public List<DetalleBoleta> listarPorBoleta(Long nroBoleta) {
+        return detalleBoletaRepository.findByBoletaNroBoletaAndActivo(nroBoleta, 0);
+    }
+
     public DetalleBoleta buscar(DetalleBoletaId id) {
         return detalleBoletaRepository.findById(id).orElse(null);
     }

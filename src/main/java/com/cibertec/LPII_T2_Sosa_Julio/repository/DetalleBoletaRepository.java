@@ -9,8 +9,9 @@ import com.cibertec.LPII_T2_Sosa_Julio.model.DetalleBoleta;
 import com.cibertec.LPII_T2_Sosa_Julio.model.DetalleBoletaId;
 
 @Repository
-public interface DetalleBoletaRepository 
-extends JpaRepository<DetalleBoleta, DetalleBoletaId> {
+public interface DetalleBoletaRepository extends JpaRepository<DetalleBoleta, DetalleBoletaId> {
 
-List<DetalleBoleta> findByActivo(Integer activo);
+    List<DetalleBoleta> findByActivo(Integer activo);
+
+    List<DetalleBoleta> findByBoletaNroBoletaAndActivo(Long nroBoleta, Integer activo);
 }
